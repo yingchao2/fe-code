@@ -1,5 +1,5 @@
 //1.绑定每个span的click事件，让鼠标点击span时打印出对应的index
-	var spans = $("#divTest span");
+    var spans = $("#divTest span");
     $(document).ready(function() {
         for (var i = 0; i < spans.length; i++) {
             (function(num) {
