@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="该实例演示对很多元素添加事件，从对每个元素添加事件监听过渡到通过将事件添加到它们的父节点而将事件委托给父节点来触发处理函数。引出事件代理的概念">
+  <title>事件代理实例代码</title>
+  <style>
+  /*添加样式的作用是为了让实例效果更明显*/
+	.d{
+	  width:100px;
+	  height:100px;
+	  background-color:#ccc;
+	  margin-bottom:10px;
+	}
+  </style>
+</head>
+<body>
+  <div id="wrap">
+  <div class="d">Item 1</div>
+  <div class="d">Item 2</div>
+  <div class="d">Item 3</div>
+  <a id="link" href="#">链接</a>
+</div>
+<button id="btn">添加</button>
+<script>
+	/*对div#wrap内部的每个div.d绑定点击事件，以及对a#link绑定点击事件。button#btn用来插入新的节点，插入的节点也要绑定事件才能生效*/
+	 var wrap = document.getElementById("wrap"),
+	 ds = wrap.getElementsByClassName("d");
+	 var link = document.getElementById("link");
+	 var btn = document.getElementById('btn');
+
+	 for(var i=0; i < ds.length; i++){
+	    ds[i].onclick = function(){
+	      alert(this.innerHTML);
+	    };
+	 }
+
+	link.addEventListener('click', function() {
+	  alert(1);
+	}, false);
+
+	btn.onclick = function(){
+	    var node = document.createElement("div");
+	    node.setAttribute("class", "d");
+	    node.innerHTML = "hello" ;
+	    node.onclick = function(){
+	        alert(this.innerHTML);
+	    };
+	    wrap.appendChild(node);
+	};
+
+
+	// 上面的代码已经可以按照预想工作了，但是感觉事件好多呢。接下来引入事件代理
+	/*通过将事件添加到它们的父节点而将事件委托给父节点来触发处理函数。当事件到达父节点的时候，通过检查事件的target来判断并获取事件源。这样新添加的元素就不需要再进行事件绑定*/
+	 var wrap = document.getElementById("wrap"),
+	 ds = wrap.getElementsByClassName("d");
+	 var link = document.getElementById("link");
+	 var btn = document.getElementById('btn');
+
+	 wrap.onclick = function(e){
+	    if(e.target.id === "link"){
+	     alert(1);
+	    }
+	    if(e.target.className === "d"){
+	     alert(e.target.innerHTML);
+	    }
+	 };
+	   btn.onclick = function(){
+	       var node = document.createElement("div");
+	       node.setAttribute("class", "d");
+	       //node.class="d";
+	       node.innerHTML = "hello" ;
+	       //node.onclick = function(){
+	       //    console.log(this.innerHTML);
+	       //}
+	       wrap.appendChild(node);
+	   };
+
+	   //对比一下，是不是代码更好理解了，并且更加简洁了。这就是事件代理的实例代码。 
+</script>
+</body>
+</html>
