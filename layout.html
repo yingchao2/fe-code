@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="多栏布局, bfc, ">
+	<meta name="description" content="多栏布局, bfc">
+	<title>Document</title>
+	<style>
+	/*多栏布局，两侧高度自适应中间部分高度*/
+	#content{
+		overflow:hidden;
+	} 
+	#content-left{
+		width: 200px;
+		float: left;
+		background-color:#f00;
+		margin-bottom:-3000px;
+		padding-bottom:3000px;
+	}
+	#content-right{
+		width:400px;
+		float: right;
+		background-color:#ff0;
+		margin-bottom:-3000px;
+		padding-bottom:3000px;
+	}
+	#content-center{
+		height:600px;
+		background-color:#0ff;
+		margin: 0 410px 0 210px;
+	}
+
+	/*bfc应用代码*/
+	#bfc{
+		background-color:#0f0;
+		width:200px;
+		overflow:hidden;
+	}
+	.bfc-child{
+		background-color:#ccc;
+		width:100px;
+		height:100px;
+		margin:20px;
+	}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<div id="content-left"></div>
+		<div id="content-right"></div>
+		<div id="content-center"></div>
+	</div>
+	
+	<div id="bfc">
+		<div class="bfc-child"></div>
+		<div class="bfc-child"></div>
+	</div>
+</body>
+</html>
