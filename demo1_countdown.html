@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    #time{
+      width:100px;
+      height:100px;
+      background-color:#ccc;
+      text-align:right;
+    }
+  </style>
+</head>
+<body>
+  <div id="time"></div>
+  <script>
+    var count = 11;
+	for(var j = 0; j < 11; j += 1) {
+	  (function(i) {
+		  setTimeout(function() {
+			  count --;
+			  $('#time').html('<span>' + count + '</span>');
+			  if(count === 0) {
+				$('#time').remove();
+			  }
+		  }, (i + 1) * 1000);
+	  })(j)    
+	}
+  </script>
+</body>
+</html>
