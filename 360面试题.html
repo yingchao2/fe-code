@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>css3方块移动</title>
+  <style>
+    
+    div{
+      width:100px;
+      height:100px;
+      background:black;
+      position:absolute;
+      animation:move 5s;
+      -moz-animation:move 5s; /* Firefox */
+      -webkit-animation:move 5s; /* Safari and Chrome */
+      -o-animation:move 5s; /* Opera */
+    }
+ 
+  @keyframes move {
+      0%   {background:black; left:0px; top:0px;}
+      25%  {background:yellow; left:200px; top:0px;}
+      50%  {background:red; left:200px; top:200px;}
+      75%  {background:green; left:0px; top:200px;}
+      100% {background:black; left:0px; top:0px;}
+   }
+  </style>
+</head>
+<body>
+<div></div>
+
+<script>
+/*对象及其原型链继承*/
+function A(n) {
+  if (n)
+    this.n = n;
+}
+function B(n) {
+   this.n = n;
+}
+function C(n) {
+   this.n = n || 123;
+}
+
+A.prototype.n = 'a';
+B.prototype.n = 'b';
+C.prototype.n = 'c';
+
+console.log(new A().n);  //VM275:17 a
+console.log(new B().n);  //VM275:18 undefined
+console.log(new C().n);  //VM275:19 123
+
+/*闭包和立即执行函数*/
+var test = (function (i) {
+  alert(i);  
+}(2));
+test(5);  //2
+
+
+/*运算符*/
+console.log(1&&2);  //2
+console.log(1||2);  //1
+console.log(1&2);  //0
+console.log(1|2);  //3
+
+
+/*this指向问题*/
+var a = 2;
+var obj = {
+  a: 123,
+  add: function() {
+    this.a += this.a;
+  }
+};
+
+obj.add();  //246 <—— obj.a
+var b = obj.add;
+b();  //4 <——window.a
+b.call(window);  //8 <—— window.a
+obj.add.apply(obj);  //492 <—— obj.a
+alert(a+obj.a);  // 500 = 8 + 492
+</script>
+</body>
+</html>
